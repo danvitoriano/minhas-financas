@@ -4,25 +4,45 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minhas Finanças</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
-  <body>
-    <!-- <img src="logo.svg" alt="Logo Minhas Finanças" /> -->
-    <h1>Minhas Finanças</h1>
-    <button>Importar</button>
-    <button>Apagar</button>
-    <p>Finança adicionada</p>
-    <form action="">
-      <label for="">Item</label>
-      <input type="text" />
-      <label for="">Data</label>
-      <input type="date" />
-      <label for="quantidade">Quantidade</label>
-      <input type="number" id="quantidade" />
-
-      <label for="valor">Valor</label>
-      <input type="number" name="" id="valor" />
-
-      <button>Incluir</button>
+  <body class="container">
+      <div class="py-3 text-center">
+        <img src="logo.svg" style="width:72px; height:72px" alt="Logo Minhas Finanças" />
+        <h1 class="h2 py-2">Minhas Finanças</h1>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary">
+            Importar
+          </button>
+          <button class="btn btn-primary">Apagar</button>
+      </div>
+      <div>
+          <p class="alert alert-primary my-3">Finança adicionada</p>
+      </div>
+    
+    <form>
+        <div class="form-group">
+            <label for="item">Item</label>
+            <input type="text" id="item" class="form-control" placeholder="Item" required autofocus />
+        </div>
+        <div class="form-group">
+            <label for="data">Data</label>
+            <input type="date" id="data" class="form-control" required />
+        </div>
+      
+        <div class="form-row">
+            <div class="form-group col-6">
+                <label for="quantidade">Quantidade</label>
+                <input type="number" id="quantidade" class="form-control" min="1" value="1" step="1" required />
+            </div>
+            <div class="form-group col-6">
+                <label for="valor">Valor</label>
+                <input type="number" class="form-control" min="1.00" step="0.10" value="1.00" required id="valor" />
+            </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Incluir</button>
     </form>
   </body>
 </html>
