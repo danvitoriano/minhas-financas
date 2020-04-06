@@ -1,9 +1,10 @@
 class Notificacao { 
-    setTexto(texto) { 
+
+    set texto(texto) { 
         this.texto = texto
     }
 
-    getTexto() { 
+    get texto() { 
         return this.texto
     }
 }
