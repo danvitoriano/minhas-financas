@@ -7,19 +7,19 @@ class Financa {
         this.valor = valor
     }
 
-    get item() { 
+    getItem() { 
         return this.item
     }
 
-    get data() { 
+    getData() { 
         return this.data
     }
 
-    get quantidade() { 
+    getQuantidade() { 
         return this.quantidade
     }
 
-    get valor() { 
+    getValor() { 
         return this.valor
     }
 }

@@ -7,7 +7,7 @@ class ListaFinancas {
         this.financas.push(financa)
     }
 
-    get financas() { 
+    getFinancas() { 
         return this.financas
     }
 }
