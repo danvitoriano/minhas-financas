@@ -1,13 +1,13 @@
-class ListaFinancas { 
-    constructor() { 
+class ListaFinancas {
+    constructor(){
         this.financas = []
     }
 
-    adiciona(financa) {
+    adiciona(financa){
         this.financas.push(financa)
     }
 
-    getFinancas() { 
+    getFinancas(){
         return this.financas
     }
 }

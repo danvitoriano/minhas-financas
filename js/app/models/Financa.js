@@ -1,25 +1,21 @@
-class Financa { 
+class Financa {
 
-    constructor(item, data, quantidade, valor) { 
+    constructor(item, data, quantidade, valor){
         this.item = item
         this.data = data
         this.quantidade = quantidade
         this.valor = valor
     }
 
-    getItem() { 
+    getItem(){
         return this.item
     }
 
-    getData() { 
+    getData(){
         return this.data
     }
 
-    getQuantidade() { 
-        return this.quantidade
-    }
 
-    getValor() { 
-        return this.valor
-    }
+
+
 }
