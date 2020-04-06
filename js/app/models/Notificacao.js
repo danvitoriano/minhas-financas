@@ -1,10 +1,13 @@
-class Notificacao { 
-
-    set texto(texto) { 
+class Notificacao{
+    constructor(texto){
         this.texto = texto
     }
 
-    get texto() { 
+    getTexto(){
         return this.texto
+    }
+
+    setTexto(texto){
+        this.texto = texto
     }
 }

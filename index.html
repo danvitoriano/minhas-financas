@@ -15,22 +15,24 @@
       />
     <h1 class="h2 py-2">Minhas finanças</h1>
     </div>
+
     <div class="text-center">
       <button type="button" class="btn btn-primary">Importar</button>
       <button type="button" class="btn btn-primary">Apagar</button>
     </div>
+
     <div>
       <p class="alert alert-primary my-3">Finança adicionada</p>
     </div>
     
-    <form action="">
+    <form onsubmit="financaController.adiciona(event)">
       <div class="form-group">
         <label for="item">Item</label>
-        <input type="text" id="item" class="form-control" placeholder="Item" required/>
+        <input type="text" id="item" class="form-control" placeholder="Item" value="cinema" required/>
       </div>
       <div class="form-group">
         <label for="data">Data</label>
-        <input type="date" id="data" class="form-control" required/>
+        <input type="date" id="data" class="form-control"  required/>
       </div>
       <div class="form-row">
         <div class="form-group col-6">
@@ -44,51 +46,50 @@
       </div>
         <input type="submit" name="Enviar" id="" class="btn btn-primary"/>
     </form>
+
     <div class="py-3">
-      <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">Item</th>
-            <th scope="col">Data</th>
-            <th scope="col">#</th>
-            <th scope="col">$</th>
-            <th scope="col">=</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Lanche</td>
-            <td>21/2/2020</td>
-            <td>1</td>
-            <td>1.00</td>
-            <td>1</td>
-          </tr>
-          <tr>
-            <td>Jogo</td>
-            <td>18/2/2020</td>
-            <td>2</td>
-            <td>2.5</td>
-            <td>5</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td colspan="4"></td>
-            <td >6</td>
-          </tr>
-        </tfoot>
-      </table>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Data</th>
+                <th scope="col">#</th>
+                <th scope="col">$</th>
+                <th scope="col">=</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lanche</td>
+                <td>21/2/2020</td>
+                <td>1</td>
+                <td>1.00</td>
+                <td>1</td>
+      
+      
+              </tr>
+              <tr>
+                <td>Jogo</td>
+                <td>18/2/2020</td>
+                <td>2</td>
+                <td>2.5</td>
+                <td>5</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4"></td>
+                <td >6</td>
+              </tr>
+            </tfoot>
+          </table>
     </div>
     <script src="js/app/models/Financa.js"></script>
-    <script src="js/app/models/Notificacao.js"></script>
     <script src="js/app/models/ListaFinancas.js"></script>
+    <script src="js/app/models/Notificacao.js"></script>
     <script src="js/app/controller/FinancaController.js"></script>
-
     <script>
       let financaController = new FinancaController()
-      financaController.adiciona()
-      console.log(financaController)
-     
     </script>
   </body>
 </html>
