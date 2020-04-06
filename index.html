@@ -25,14 +25,14 @@
       <p class="alert alert-primary my-3">Finança adicionada</p>
     </div>
     
-    <form action="">
+    <form onsubmit="financaController.adiciona(event)">
       <div class="form-group">
         <label for="item">Item</label>
-        <input type="text" id="item" class="form-control" placeholder="Item" required/>
+        <input type="text" id="item" class="form-control" placeholder="Item" value="cinema" required/>
       </div>
       <div class="form-group">
         <label for="data">Data</label>
-        <input type="date" id="data" class="form-control" required/>
+        <input type="date" id="data" class="form-control"  required/>
       </div>
       <div class="form-row">
         <div class="form-group col-6">
@@ -89,10 +89,7 @@
     <script src="js/app/models/Notificacao.js"></script>
     <script src="js/app/controller/FinancaController.js"></script>
     <script>
-      // let financa = new Financa("cinema", "06/04/2020", 1, 200)
-      
       let financaController = new FinancaController()
-      financaController.adiciona()
     </script>
   </body>
 </html>
