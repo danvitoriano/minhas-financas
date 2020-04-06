@@ -7,7 +7,7 @@ class Financa {
         this.valor = valor
     }
 
-    get item(){
+    getItem(){
         return this.item
     }
 

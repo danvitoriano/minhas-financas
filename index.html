@@ -15,10 +15,12 @@
       />
     <h1 class="h2 py-2">Minhas finanças</h1>
     </div>
+
     <div class="text-center">
       <button type="button" class="btn btn-primary">Importar</button>
       <button type="button" class="btn btn-primary">Apagar</button>
     </div>
+
     <div>
       <p class="alert alert-primary my-3">Finança adicionada</p>
     </div>
@@ -44,6 +46,7 @@
       </div>
         <input type="submit" name="Enviar" id="" class="btn btn-primary"/>
     </form>
+
     <div class="py-3">
         <table class="table">
             <thead>
@@ -81,5 +84,15 @@
             </tfoot>
           </table>
     </div>
+    <script src="js/app/models/Financa.js"></script>
+    <script src="js/app/models/ListaFinancas.js"></script>
+    <script src="js/app/models/Notificacao.js"></script>
+    <script src="js/app/controller/FinancaController.js"></script>
+    <script>
+      // let financa = new Financa("cinema", "06/04/2020", 1, 200)
+      
+      let financaController = new FinancaController()
+      financaController.adiciona()
+    </script>
   </body>
 </html>
