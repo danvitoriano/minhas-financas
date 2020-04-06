@@ -3,7 +3,8 @@ class FinancasView {
         this.elemento = elemento
     }
 
-    template() { 
+    template(model) { 
+
         return `<table class="table">
         <thead>
           <tr>
@@ -15,22 +16,18 @@ class FinancasView {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Lanche</td>
-            <td>21/2/2020</td>
-            <td>1</td>
-            <td>1.00</td>
-            <td>1</td>
-  
-  
-          </tr>
-          <tr>
-            <td>Jogo</td>
-            <td>18/2/2020</td>
-            <td>2</td>
-            <td>2.5</td>
-            <td>5</td>
-          </tr>
+            ${model.financas.map(
+                financa => {
+                    return `<tr>
+                    <td>${financa.item}</td>
+                    <td>21/2/2020</td>
+                    <td>1</td>
+                    <td>1.00</td>
+                    <td>1</td>
+                  </tr>`
+                 }
+            ).join("")
+        }
         </tbody>
         <tfoot>
           <tr>
@@ -41,7 +38,7 @@ class FinancasView {
       </table>`
     }
 
-    update() { 
-       this.elemento.innerHTML = this.template()
+    update(modelo) { 
+       this.elemento.innerHTML = this.template(modelo)
     }
 }
