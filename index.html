@@ -21,8 +21,7 @@
       <button type="button" class="btn btn-primary">Apagar</button>
     </div>
 
-    <div id="alertaFinancaAdicionada">
-      <!-- <p class="alert alert-primary my-3">Finança adicionada</p> -->
+    <div id="notificacaoView">
     </div>
     
     <form onsubmit="financaController.adiciona(event)">
@@ -56,6 +55,7 @@
     <script src="js/app/models/Notificacao.js"></script>
     <script src="js/app/controller/FinancaController.js"></script>
     <script src="js/app/views/FinancasView.js"></script>
+    <script src="js/app/views/NotificacaoView.js"></script>
 
     <script>
       let financaController = new FinancaController()
