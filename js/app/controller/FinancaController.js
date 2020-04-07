@@ -24,7 +24,8 @@ class FinancaController {
     }    
 
     criaFinanca() { 
-        return new Financa(this.inputItem.value, this.inputData.value, this.inputQuantidade.value, this.inputValor.value)
+        console.log(DateHelper.textoParaData(this.inputData.value))
+        return new Financa(this.inputItem.value, DateHelper.textoParaData(this.inputData.value), this.inputQuantidade.value, this.inputValor.value)
     }
 
     limpaFormulario() { 
@@ -33,21 +34,6 @@ class FinancaController {
         this.inputQuantidade.value = ""
         this.inputValor.value = ""
         // this.inputItem.focus()
-    }
-
-    notificar(mensagem) {
-        const elemento = document.createElement('p'); // Cria um novo elemento
-
-        elemento.innerHTML = mensagem;
-        elemento.classList.add('alert', 'alert-primary', 'my-3')
-
-        const mensagemContainer = document.querySelector('#alertaFinancaAdicionada')
-
-        mensagemContainer.appendChild(elemento); // Adiciona o elemento no DOM
-
-        setTimeout(() => {
-            mensagemContainer.removeChild(elemento); // Elimina da árvore de DOM
-        }, 3e3);
     }
 
 }
