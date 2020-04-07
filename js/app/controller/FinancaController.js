@@ -8,15 +8,19 @@ class FinancaController {
         this.listaFinancas = new ListaFinancas()
         this.financasView = new FinancasView(document.querySelector("#financasView"))
         this.financasView.update(this.listaFinancas)
+
+        this.notificacao = new Notificacao()
+        this.notificacaoView = new NotificacaoView(document.querySelector("#notificacaoView"))
+        this.notificacaoView.update(this.notificacao)
     }
 
     adiciona(evento){
         evento.preventDefault()
         this.listaFinancas.adiciona(this.criaFinanca())
         this.financasView.update(this.listaFinancas)
+        this.notificacao.texto = "Finança adicionada 2"
+        this.notificacaoView.update(this.notificacao)
         this.limpaFormulario()
-
-        this.notificar('Finança adicionada')
     }    
 
     criaFinanca() { 
@@ -28,7 +32,7 @@ class FinancaController {
         this.inputData.value = ""
         this.inputQuantidade.value = ""
         this.inputValor.value = ""
-        this.inputItem.focus()
+        // this.inputItem.focus()
     }
 
     notificar(mensagem) {

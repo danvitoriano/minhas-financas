@@ -1,13 +1,13 @@
 class Notificacao{
-    constructor(texto){
-        this.texto = texto
+    constructor(texto=''){
+        this._texto = texto
     }
 
-    getTexto(){
-        return this.texto
+    get texto(){
+        return this._texto
     }
 
-    setTexto(texto){
-        this.texto = texto
+    set texto(texto){
+        this._texto = texto
     }
 }
