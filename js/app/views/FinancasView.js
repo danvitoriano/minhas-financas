@@ -17,13 +17,13 @@ class FinancasView {
         </thead>
         <tbody>
             ${model.financas.map(
-                financa => {
+                (financa, index) => {
                     return `<tr>
                     <td>${financa.item}</td>
-                    <td>21/2/2020</td>
-                    <td>1</td>
-                    <td>1.00</td>
-                    <td>1</td>
+                    <td>${financa.data}</td>
+                    <td>${index + 1}</td>
+                    <td>${financa.quantidade}</td>
+                    <td>${financa.valor}</td>
                   </tr>`
                  }
             ).join("")
