@@ -1,6 +1,9 @@
 class FinancaController {
     constructor(){
         this.inputItem = document.querySelector("#item")
+        this.inputData = document.querySelector("#data")
+        this.inputQuantidade = document.querySelector("#quantidade")
+        this.inputValor = document.querySelector("#valor")
         this.listaFinancas = new ListaFinancas()
         this.financasView = new FinancasView(document.querySelector("#financasView"))
         this.financasView.update(this.listaFinancas)
@@ -13,8 +16,8 @@ class FinancaController {
         this.limpaFormulario()
     }    
 
-    criaFinanca(){
-        return new Financa(this.inputItem.value, "06/04/2020", 1, 200)
+        criaFinanca(){
+            return new Financa(this.inputItem.value,this.inputData.value, this.inputQuantidade.value, this.inputValor.value)
     }
 
     limpaFormulario(){

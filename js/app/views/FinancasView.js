@@ -19,10 +19,10 @@ class FinancasView {
              f => `
                 <tr>
                     <td>${f.item}</td>
-                    <td>18/2/2020</td>
-                    <td>2</td>
-                    <td>2.5</td>
-                    <td>5</td>
+                    <td>${f.data}</td>
+                    <td>${f.quantidade}</td>
+                    <td>${f.valor}</td>
+                    <td>${f.quantidade * f.valor}</td>
                 </tr>
              `
 
