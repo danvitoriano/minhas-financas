@@ -14,7 +14,41 @@ https://github.com/danvitoriano/minhas-financas/issues
 
 https://github.com/danvitoriano/minhas-financas/wiki
 
+## Install
+
+```
+cd server
+npm i
+```
+
+## Run Server
+
+```
+cd server
+npm run start
+```
+
+**Client:**
+
+[localhost:3000](http://localhost:3000)
+
+Files at `/server` folder. 
+
+It uses Express.JS as server side framework.
+
 **API:**
+
+GET: /financas/semana[localhost:3000/financas/semana](http://localhost:3000/financas/semana)
+
+GET: /financas/anterior [localhost:3000/financas/anterior](http://localhost:3000/financas/anterior)
+
+GET: /financas/retrasada [localhost:3000/financas/retrasada](http://localhost:3000/financas/retrasada)
+
+POST: /financas [localhost:3000/financas](http://localhost:3000/financas)
+
+**API on Heroku:**
+
+If you prefer use an online version, replace the endpoints for these:
 
 GET: /financas/semana
 
@@ -35,5 +69,6 @@ POST: /minhas-financas
 **Build**
 
 ```
+cd server
 npm run build
 ```
