@@ -1,6 +1,8 @@
 # Minhas Finanças
 
-Object Oriented and Design Patterned JavaScript ES2015+ "Minhas Finanças" Project. It uses an Node.js API published on Heroku App.
+Object Oriented and Design Patterned JavaScript ES2015+ "Minhas Finanças" Project. 
+
+It uses an Node.js API built with Express.js, also published on Heroku App hosting.
 
 ## Open Source Project
 
