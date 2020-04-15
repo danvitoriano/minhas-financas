@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minhas finanças</title>
+  </head>
+  <body class="container">
+    <div class="py-3 text-center">
+      <img
+      src="logo.svg"
+      style="width: 72px; height: 72px;"
+      alt="Logo Minhas Finanças"
+      />
+    <h1 class="h2 py-2">Minhas finanças</h1>
+    </div>
+
+    <div class="text-center">
+      <button type="button" onclick="financaController.importaFinancas()" class="btn btn-primary">Importar</button>
+      <button type="button" class="btn btn-primary">Apagar</button>
+    </div>
+
+    <div id="notificacaoView">
+    </div>
+    
+    <form onsubmit="financaController.adiciona(event)">
+      <div class="form-group">
+        <label for="item">Item</label>
+        <input type="text" id="item" class="form-control" placeholder="Item" value="cinema" required/>
+      </div>
+      <div class="form-group">
+        <label for="data">Data</label>
+        <input type="date" id="data" class="form-control" value="2020-04-06" required/>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-6">
+          <label for="quantidade">Quantidade</label>
+          <input type="number" id="quantidade" class="form-control" min="1" step="1" value="1" required/>
+        </div>
+        <div class="form-group col-6">
+          <label for="valor">Valor</label>
+          <input type="number" name="" id="valor" class="form-control" min="1.00" step="0.10" value="1.00" required/>
+        </div>
+      </div>
+        <input type="submit" name="Enviar" id="" class="btn btn-primary"/>
+    </form>
+
+    <div class="py-3"  id="financasView">
+       
+    </div>
+
+    <script src="js/app/models/Financa.js"></script>
+    <script src="js/app/models/ListaFinancas.js"></script>
+    <script src="js/app/models/Notificacao.js"></script>
+    <script src="js/app/controller/FinancaController.js"></script>
+    <script src="js/app/views/FinancasView.js"></script>
+    <script src="js/app/views/NotificacaoView.js"></script>
+    <script src="js/app/helpers/DateHelper.js"></script>
+    <script src="js/app/services/FinancaService.js"></script>
+
+    <script>
+      let financaController = new FinancaController()
+    </script>
+  </body>
+</html>
