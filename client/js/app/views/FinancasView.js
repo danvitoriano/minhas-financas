@@ -1,6 +1,6 @@
-class FinancasView {
+class FinancasView extends View {
   constructor(elemento) {
-    this.elemento = elemento
+    super(elemento)
   }
 
   template(model) {
@@ -38,7 +38,4 @@ class FinancasView {
       </table>`
   }
 
-  update(modelo) {
-    this.elemento.innerHTML = this.template(modelo)
-  }
 }
