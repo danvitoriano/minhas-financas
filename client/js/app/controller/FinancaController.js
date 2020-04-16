@@ -1,39 +1,53 @@
-class FinancaController {
-    constructor(){
-        this.inputItem = document.querySelector("#item")
-        this.inputData = document.querySelector("#data")
-        this.inputQuantidade = document.querySelector("#quantidade")
-        this.inputValor = document.querySelector("#valor")
+import { DateHelper } from '../helpers/DateHelper'
+import { Financa } from '../models/Financa'
+import { ListaFinancas } from '../models/ListaFinancas'
+import { Notificacao } from '../models/Notificacao'
+import { NotificacaoView } from '../views/NotificacaoView'
+import { FinancasView } from '../views/FinancasView'
+import { FinancaService } from '../services/FinancaService'
 
-        this.listaFinancas = new ListaFinancas()
-        this.financasView = new FinancasView(document.querySelector("#financasView"))
-        this.financasView.update(this.listaFinancas)
+export class FinancaController {
+    constructor() {
+        let $ = document.querySelector.bind(document)
+        this._inputItem = $("#item")
+        this._inputData = $("#data")
+        this._inputQuantidade = $("#quantidade")
+        this._inputValor = $("#valor")
 
-        this.notificacao = new Notificacao()
-        this.notificacaoView = new NotificacaoView(document.querySelector("#notificacaoView"))
-        this.notificacaoView.update(this.notificacao)
+        this._listaFinancas = new ListaFinancas()
+        this._financasView = new FinancasView($("#financasView"))
+        this._financasView.update(this._listaFinancas)
+
+        this._notificacao = new Notificacao()
+        this._notificacaoView = new NotificacaoView($("#notificacaoView"))
+        this._notificacaoView.update(this._notificacao)
     }
 
-    adiciona(evento){
+    adiciona(evento) {
         evento.preventDefault()
-        this.listaFinancas.adiciona(this.criaFinanca())
-        this.financasView.update(this.listaFinancas)
-        this.notificacao.texto = "Finança adicionada 2"
-        this.notificacaoView.update(this.notificacao)
-        this.limpaFormulario()
-    }    
-
-    criaFinanca() { 
-        console.log(DateHelper.textoParaData(this.inputData.value))
-        return new Financa(this.inputItem.value, DateHelper.textoParaData(this.inputData.value), this.inputQuantidade.value, this.inputValor.value)
+        this._listaFinancas.adiciona(this._criaFinanca())
+        this._financasView.update(this._listaFinancas)
+        this._notificacao.texto = "Finança adicionada 2"
+        this._notificacaoView.update(this._notificacao)
+        this._limpaFormulario()
     }
 
-    limpaFormulario() { 
-        this.inputItem.value = ""
-        this.inputData.value = ""
-        this.inputQuantidade.value = ""
-        this.inputValor.value = ""
-        // this.inputItem.focus()
+    _criaFinanca() {
+        console.log(DateHelper.textoParaData(this._inputData.value))
+        return new Financa(this._inputItem.value, DateHelper.textoParaData(this._inputData.value), this._inputQuantidade.value, this._inputValor.value)
+    }
+
+    _limpaFormulario() {
+        this._inputItem.value = ""
+        this._inputData.value = ""
+        this._inputQuantidade.value = ""
+        this._inputValor.value = ""
+        // this._inputItem.focus()
+    }
+
+    apaga() {
+        this._listaFinancas.esvazia()
+        this._financasView.update(this._listaFinancas)
     }
 
     importaFinancas() {
@@ -42,10 +56,10 @@ class FinancaController {
             .then(
                 financas => financas.map(
                     financa => {
-                        this.listaFinancas.adiciona(financa)
-                        this.financasView.update(this.listaFinancas)
-                        this.notificacao.texto = "Finanças da semana importadas"
-                        this.notificacaoView.update(this.notificacao)
+                        this._listaFinancas.adiciona(financa)
+                        this._financasView.update(this._listaFinancas)
+                        this._notificacao.texto = "Finanças da semana importadas"
+                        this._notificacaoView.update(this._notificacao)
                     }
                 )
             )
@@ -53,7 +67,7 @@ class FinancaController {
                 console.error(err)
                 return
             })
-            
+
     }
 
 }

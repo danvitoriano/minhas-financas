@@ -1,18 +1,31 @@
-class Financa {
+export class Financa {
 
-    constructor(item, data, quantidade, valor){
-        this.item = item
-        this.data = data
-        this.quantidade = quantidade
-        this.valor = valor
+    constructor(item, data, quantidade, valor) {
+        this._item = item
+        this._data = new Date(data.getTime())
+        this._quantidade = quantidade
+        this._valor = valor
+        Object.freeze(this)
     }
 
-    getItem(){
-        return this.item
+    get item() {
+        return this._item
     }
 
-    getData(){
-        return this.data
+    get data() {
+        return new Date(this._data.getTime())
+    }
+
+    get quantidade() {
+        return this._quantidade
+    }
+
+    get valor() {
+        return this._valor
+    }
+
+    get total() {
+        return this._quantidade * this._valor
     }
 
 
