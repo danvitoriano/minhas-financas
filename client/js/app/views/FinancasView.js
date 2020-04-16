@@ -1,11 +1,11 @@
-class FinancasView { 
-    constructor(elemento) { 
-        this.elemento = elemento
-    }
+class FinancasView {
+  constructor(elemento) {
+    this.elemento = elemento
+  }
 
-    template(model) { 
+  template(model) {
 
-        return `<table class="table">
+    return `<table class="table">
         <thead>
           <tr>
             <th scope="col">Item</th>
@@ -17,28 +17,28 @@ class FinancasView {
         </thead>
         <tbody>
             ${model.financas.map(
-                financa => {
-                    return `<tr>
+      financa => {
+        return `<tr>
                     <td>${financa.item}</td>
                     <td>${DateHelper.dataParaTexto(financa.data)}</td>
                     <td>${financa.quantidade}</td>
                     <td>${financa.valor}</td>
-                    <td>x</td>
+                    <td>${financa.total}</td>
                   </tr>`
-                 }
-            ).join("")
-        }
+      }
+    ).join("")
+      }
         </tbody>
         <tfoot>
           <tr>
             <td colspan="4"></td>
-            <td >6</td>
+            <td>${model.financas.reduce((acc, financa) => acc + financa.total, 0.0)}</td>
           </tr>
         </tfoot>
       </table>`
-    }
+  }
 
-    update(modelo) { 
-       this.elemento.innerHTML = this.template(modelo)
-    }
+  update(modelo) {
+    this.elemento.innerHTML = this.template(modelo)
+  }
 }

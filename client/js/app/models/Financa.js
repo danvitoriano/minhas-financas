@@ -24,6 +24,10 @@ class Financa {
         return this._valor
     }
 
+    get total() {
+        return this._quantidade * this._valor
+    }
+
 
 
 
