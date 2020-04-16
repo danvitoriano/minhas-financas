@@ -1,4 +1,4 @@
-class ListaFinancas {
+export class ListaFinancas {
     constructor() {
         this._financas = []
     }

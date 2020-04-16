@@ -1,0 +1,21 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "watch": "npm run build -- -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "babel-loader": "^8.0.6",
+    "source-map-explorer": "^1.8.0",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
+  }
+}

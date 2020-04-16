@@ -1,4 +1,11 @@
-class FinancaController {
+import { DateHelper } from '../helpers/DateHelper'
+import { Financa } from '../models/Financa'
+import { ListaFinancas } from '../models/ListaFinancas'
+import { Notificacao } from '../models/Notificacao'
+import { NotificacaoView } from '../views/NotificacaoView'
+import { FinancasView } from '../views/FinancasView'
+
+export class FinancaController {
     constructor() {
         let $ = document.querySelector.bind(document)
         this._inputItem = $("#item")

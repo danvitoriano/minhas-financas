@@ -22,11 +22,7 @@
     </div>
 
     <div class="text-center">
-      <button
-        type="button"
-        onclick="financaController.importaFinancas()"
-        class="btn btn-primary"
-      >
+      <button type="button" id="btn-import" class="btn btn-primary">
         Importar
       </button>
       <button type="button" class="btn btn-primary">Apagar</button>
@@ -34,7 +30,7 @@
 
     <div id="notificacaoView"></div>
 
-    <form onsubmit="financaController.adiciona(event)">
+    <form>
       <div class="form-group">
         <label for="item">Item</label>
         <input
@@ -88,18 +84,6 @@
 
     <div class="py-3" id="financasView"></div>
 
-    <script src="js/app/models/Financa.js"></script>
-    <script src="js/app/models/ListaFinancas.js"></script>
-    <script src="js/app/models/Notificacao.js"></script>
-    <script src="js/app/controller/FinancaController.js"></script>
-    <script src="js/app/views/View.js"></script>
-    <script src="js/app/views/FinancasView.js"></script>
-    <script src="js/app/views/NotificacaoView.js"></script>
-    <script src="js/app/helpers/DateHelper.js"></script>
-    <script src="js/app/services/FinancaService.js"></script>
-
-    <script>
-      let financaController = new FinancaController();
-    </script>
+    <script src="./build/_boot.bundle.js"></script>
   </body>
 </html>

@@ -1,4 +1,4 @@
-class Financa {
+export class Financa {
 
     constructor(item, data, quantidade, valor) {
         this._item = item

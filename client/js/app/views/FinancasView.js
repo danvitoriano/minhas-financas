@@ -1,4 +1,7 @@
-class FinancasView extends View {
+import { View } from './View'
+import { DateHelper } from '../helpers/DateHelper'
+
+export class FinancasView extends View {
   constructor(elemento) {
     super(elemento)
   }

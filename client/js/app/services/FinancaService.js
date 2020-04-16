@@ -1,5 +1,5 @@
-class FinancaService{
-    getFinancasSemana(){
+export class FinancaService {
+    getFinancasSemana() {
         return new Promise(
             (resolve, reject) => {
                 fetch('http://localhost:3920/financas/anterior')
@@ -21,7 +21,7 @@ class FinancaService{
                         reject("deu ruim")
                     })
 
-                    
+
             }
         )
     }

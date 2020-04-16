@@ -1,4 +1,6 @@
-class NotificacaoView extends View {
+import { View } from './View'
+
+export class NotificacaoView extends View {
     constructor(elemento) {
         super(elemento)
     }

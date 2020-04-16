@@ -1,4 +1,4 @@
-class Notificacao {
+export class Notificacao {
     constructor(texto = '') {
         this._texto = texto
     }
