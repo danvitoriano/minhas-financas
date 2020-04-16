@@ -1,8 +1,10 @@
+import { Financa } from '../models/Financa'
+
 export class FinancaService {
     getFinancasSemana() {
         return new Promise(
             (resolve, reject) => {
-                fetch('http://localhost:3920/financas/anterior')
+                fetch('https://evening-badlands-20922.herokuapp.com/financas/anterior')
                     .then(res => res.json())
                     .then(financas => {
                         resolve(

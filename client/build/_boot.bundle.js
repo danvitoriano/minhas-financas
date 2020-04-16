@@ -95,6 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 var financaController = new _controller_FinancaController__WEBPACK_IMPORTED_MODULE_0__["FinancaController"]();
 document.querySelector('form').onsubmit = financaController.adiciona.bind(financaController);
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController);
+document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController);
 
 /***/ }),
 /* 1 */
@@ -109,11 +110,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _models_Notificacao__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5);
 /* harmony import */ var _views_NotificacaoView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6);
 /* harmony import */ var _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8);
+/* harmony import */ var _services_FinancaService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -171,11 +174,18 @@ var FinancaController = /*#__PURE__*/function () {
       this._inputValor.value = ""; // this._inputItem.focus()
     }
   }, {
+    key: "apaga",
+    value: function apaga() {
+      this._listaFinancas.esvazia();
+
+      this._financasView.update(this._listaFinancas);
+    }
+  }, {
     key: "importaFinancas",
     value: function importaFinancas() {
       var _this = this;
 
-      var financaService = new FinancaService();
+      var financaService = new _services_FinancaService__WEBPACK_IMPORTED_MODULE_6__["FinancaService"]();
       financaService.getFinancasSemana().then(function (financas) {
         return financas.map(function (financa) {
           _this._listaFinancas.adiciona(financa);
@@ -329,6 +339,11 @@ var ListaFinancas = /*#__PURE__*/function () {
     key: "adiciona",
     value: function adiciona(financa) {
       this._financas.push(financa);
+    }
+  }, {
+    key: "esvazia",
+    value: function esvazia() {
+      this._financas = [];
     }
   }, {
     key: "financas",
@@ -519,6 +534,47 @@ var FinancasView = /*#__PURE__*/function (_View) {
 
   return FinancasView;
 }(_View__WEBPACK_IMPORTED_MODULE_0__["View"]);
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FinancaService", function() { return FinancaService; });
+/* harmony import */ var _models_Financa__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var FinancaService = /*#__PURE__*/function () {
+  function FinancaService() {
+    _classCallCheck(this, FinancaService);
+  }
+
+  _createClass(FinancaService, [{
+    key: "getFinancasSemana",
+    value: function getFinancasSemana() {
+      return new Promise(function (resolve, reject) {
+        fetch('https://evening-badlands-20922.herokuapp.com/financas/anterior').then(function (res) {
+          return res.json();
+        }).then(function (financas) {
+          resolve(financas.map(function (financa) {
+            return new _models_Financa__WEBPACK_IMPORTED_MODULE_0__["Financa"](financa.item, new Date(financa.data), financa.quantidade, financa.valor);
+          }));
+        })["catch"](function (err) {
+          console.error(err);
+          reject("deu ruim");
+        });
+      });
+    }
+  }]);
+
+  return FinancaService;
+}();
 
 /***/ })
 /******/ ]);

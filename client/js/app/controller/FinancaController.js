@@ -4,6 +4,7 @@ import { ListaFinancas } from '../models/ListaFinancas'
 import { Notificacao } from '../models/Notificacao'
 import { NotificacaoView } from '../views/NotificacaoView'
 import { FinancasView } from '../views/FinancasView'
+import { FinancaService } from '../services/FinancaService'
 
 export class FinancaController {
     constructor() {
@@ -42,6 +43,11 @@ export class FinancaController {
         this._inputQuantidade.value = ""
         this._inputValor.value = ""
         // this._inputItem.focus()
+    }
+
+    apaga() {
+        this._listaFinancas.esvazia()
+        this._financasView.update(this._listaFinancas)
     }
 
     importaFinancas() {
