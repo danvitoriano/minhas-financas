@@ -8,7 +8,15 @@ export class ListaFinancas {
     }
 
     esvazia() {
-        this._financas = [];
+        this._financas = []
+    }
+
+    ordena(criterio) {
+        this._financas.sort(criterio)
+    }
+
+    reverse() {
+        this._financas.reverse()
     }
 
     get financas() {

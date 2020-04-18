@@ -15,12 +15,23 @@ export class FinancaController {
         this._inputValor = $("#valor")
 
         this._listaFinancas = new ListaFinancas()
-        this._financasView = new FinancasView($("#financasView"))
+        this._financasView = new FinancasView($("#financasView"), this)
         this._financasView.update(this._listaFinancas)
 
         this._notificacao = new Notificacao()
         this._notificacaoView = new NotificacaoView($("#notificacaoView"))
         this._notificacaoView.update(this._notificacao)
+
+        this._ordemColuna = ""
+        this._ordemAtual = ""
+    }
+
+    get coluna() {
+        return this._ordemColuna
+    }
+
+    get ordem() {
+        return this._ordemAtual
     }
 
     adiciona(evento) {
@@ -68,6 +79,25 @@ export class FinancaController {
                 return
             })
 
+    }
+
+    ordena(coluna) {
+        if (coluna === 'item')
+            this._listaFinancas.ordena((a, b) => a[coluna].localeCompare(b[coluna]))
+        else
+            this._listaFinancas.ordena((a, b) => a[coluna] - b[coluna])
+
+        if (coluna === this._ordemAtual) {
+            this._listaFinancas.reverse()
+
+            this._ordemAtual = ""
+        } else {
+            this._ordemAtual = coluna
+        }
+
+        this._ordemColuna = coluna
+
+        this._financasView.update(this._listaFinancas)
     }
 
 }
