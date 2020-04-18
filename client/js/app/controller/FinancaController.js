@@ -25,11 +25,17 @@ export class FinancaController {
 
     adiciona(evento) {
         evento.preventDefault()
-        this._listaFinancas.adiciona(this._criaFinanca())
+        this.criaFinanca(this._criaFinanca())
+        // this._listaFinancas.adiciona(this._criaFinanca())
         this._financasView.update(this._listaFinancas)
         this._notificacao.texto = "Finança adicionada 2"
         this._notificacaoView.update(this._notificacao)
         this._limpaFormulario()
+    }
+
+    criaFinanca(financa) {
+        let financaService = new FinancaService()
+        financaService.postFinanca(financa)
     }
 
     _criaFinanca() {
