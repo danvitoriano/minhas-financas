@@ -661,7 +661,7 @@ var Bind = /*#__PURE__*/function () {
           view.update(target);
         } else if (property === 'reverse') {
           target.reverse();
-          console.log('Reverse');
+          view.update(target);
         }
       },
       set: function set(target, property, value) {
@@ -672,8 +672,6 @@ var Bind = /*#__PURE__*/function () {
         } else if (property === 'ordena') {
           target.ordena(value);
           view.update(target);
-          console.log('Ordena');
-          console.log(value);
           return true;
         } else return false;
       }

@@ -8,7 +8,7 @@ export class Bind {
                     view.update(target);
                 } else if (property === 'reverse') {
                     target.reverse();
-                    console.log('Reverse');
+                    view.update(target);
                 }
             },
             set: (target, property, value) => {
@@ -19,8 +19,6 @@ export class Bind {
                 }else if (property === 'ordena') {
                     target.ordena(value);
                     view.update(target);
-                    console.log('Ordena');
-                    console.log(value);
                     return true;
                 } else return false;
             }
