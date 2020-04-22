@@ -135,11 +135,7 @@ var FinancaController = /*#__PURE__*/function () {
     this._inputData = $("#data");
     this._inputQuantidade = $("#quantidade");
     this._inputValor = $("#valor");
-    this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"), this); // Make initial empty list
-
-    this._financasView.update(new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]());
-
-    this._listaFinancas = new _helpers_Bind__WEBPACK_IMPORTED_MODULE_7__["Bind"](new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"](), this._financasView, "adiciona", "esvazia");
+    this._listaFinancas = new _helpers_Bind__WEBPACK_IMPORTED_MODULE_7__["Bind"](new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"](), new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"), this), "adiciona", "esvazia");
     this._notificacao = new _models_Notificacao__WEBPACK_IMPORTED_MODULE_3__["Notificacao"]();
     this._notificacaoView = new _views_NotificacaoView__WEBPACK_IMPORTED_MODULE_4__["NotificacaoView"]($("#notificacaoView"));
 
@@ -180,8 +176,6 @@ var FinancaController = /*#__PURE__*/function () {
     key: "apaga",
     value: function apaga() {
       this._listaFinancas.esvazia();
-
-      this._financasView.update(this._listaFinancas);
     }
   }, {
     key: "importaFinancas",
@@ -654,6 +648,7 @@ var Bind = /*#__PURE__*/function () {
   function Bind(model, view) {
     _classCallCheck(this, Bind);
 
+    view.update(model);
     this._proxy = new Proxy(model, {
       get: function get(target, property) {
         if (property === 'esvazia') {

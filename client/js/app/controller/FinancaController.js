@@ -15,13 +15,9 @@ export class FinancaController {
         this._inputQuantidade = $("#quantidade")
         this._inputValor = $("#valor")
 
-        this._financasView = new FinancasView($("#financasView"), this)
-        // Make initial empty list
-        this._financasView.update(new ListaFinancas())
-
         this._listaFinancas = new Bind(
             new ListaFinancas(),
-            this._financasView,
+            new FinancasView($("#financasView"), this),
             "adiciona",
             "esvazia"
         );
@@ -65,7 +61,6 @@ export class FinancaController {
 
     apaga() {
         this._listaFinancas.esvazia()
-        this._financasView.update(this._listaFinancas)
     }
 
     importaFinancas() {

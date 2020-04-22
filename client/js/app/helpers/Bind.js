@@ -1,6 +1,8 @@
 export class Bind {
     constructor(model, view, ...props) {
 
+        view.update(model);
+
         this._proxy = new Proxy(model, {
             get: (target, property) => {
                 if (property === 'esvazia') {
