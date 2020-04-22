@@ -5,6 +5,7 @@ import { Notificacao } from '../models/Notificacao'
 import { NotificacaoView } from '../views/NotificacaoView'
 import { FinancasView } from '../views/FinancasView'
 import { FinancaService } from '../services/FinancaService'
+import { Bind } from '../helpers/Bind'
 
 export class FinancaController {
     constructor() {
@@ -14,9 +15,16 @@ export class FinancaController {
         this._inputQuantidade = $("#quantidade")
         this._inputValor = $("#valor")
 
-        this._listaFinancas = new ListaFinancas()
         this._financasView = new FinancasView($("#financasView"), this)
-        this._financasView.update(this._listaFinancas)
+        // Make initial empty list
+        this._financasView.update(new ListaFinancas())
+
+        this._listaFinancas = new Bind(
+            new ListaFinancas(),
+            this._financasView,
+            "adiciona",
+            "esvazia"
+        );
 
         this._notificacao = new Notificacao()
         this._notificacaoView = new NotificacaoView($("#notificacaoView"))
@@ -37,8 +45,7 @@ export class FinancaController {
     adiciona(evento) {
         evento.preventDefault()
         this._listaFinancas.adiciona(this._criaFinanca())
-        this._financasView.update(this._listaFinancas)
-        this._notificacao.texto = "Finança adicionada 2"
+        this._notificacao.texto = "Finança adicionada"
         this._notificacaoView.update(this._notificacao)
         this._limpaFormulario()
     }
@@ -68,7 +75,6 @@ export class FinancaController {
                 financas => financas.map(
                     financa => {
                         this._listaFinancas.adiciona(financa)
-                        this._financasView.update(this._listaFinancas)
                         this._notificacao.texto = "Finanças da semana importadas"
                         this._notificacaoView.update(this._notificacao)
                     }
@@ -97,7 +103,6 @@ export class FinancaController {
 
         this._ordemColuna = coluna
 
-        this._financasView.update(this._listaFinancas)
     }
 
 }

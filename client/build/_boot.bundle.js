@@ -111,11 +111,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _views_NotificacaoView__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6);
 /* harmony import */ var _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8);
 /* harmony import */ var _services_FinancaService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9);
+/* harmony import */ var _helpers_Bind__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(10);
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 
 
 
@@ -133,15 +135,18 @@ var FinancaController = /*#__PURE__*/function () {
     this._inputData = $("#data");
     this._inputQuantidade = $("#quantidade");
     this._inputValor = $("#valor");
-    this._listaFinancas = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
-    this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"));
+    this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"), this); // Make initial empty list
 
-    this._financasView.update(this._listaFinancas);
+    this._financasView.update(new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]());
 
+    this._listaFinancas = new _helpers_Bind__WEBPACK_IMPORTED_MODULE_7__["Bind"](new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"](), this._financasView, "adiciona", "esvazia");
     this._notificacao = new _models_Notificacao__WEBPACK_IMPORTED_MODULE_3__["Notificacao"]();
     this._notificacaoView = new _views_NotificacaoView__WEBPACK_IMPORTED_MODULE_4__["NotificacaoView"]($("#notificacaoView"));
 
     this._notificacaoView.update(this._notificacao);
+
+    this._ordemColuna = "";
+    this._ordemAtual = "";
   }
 
   _createClass(FinancaController, [{
@@ -151,9 +156,7 @@ var FinancaController = /*#__PURE__*/function () {
 
       this._listaFinancas.adiciona(this._criaFinanca());
 
-      this._financasView.update(this._listaFinancas);
-
-      this._notificacao.texto = "Finança adicionada 2";
+      this._notificacao.texto = "Finança adicionada";
 
       this._notificacaoView.update(this._notificacao);
 
@@ -190,8 +193,6 @@ var FinancaController = /*#__PURE__*/function () {
         return financas.map(function (financa) {
           _this._listaFinancas.adiciona(financa);
 
-          _this._financasView.update(_this._listaFinancas);
-
           _this._notificacao.texto = "Finanças da semana importadas";
 
           _this._notificacaoView.update(_this._notificacao);
@@ -200,6 +201,35 @@ var FinancaController = /*#__PURE__*/function () {
         console.error(err);
         return;
       });
+    }
+  }, {
+    key: "ordena",
+    value: function ordena(coluna) {
+      if (coluna === 'item') this._listaFinancas.ordena(function (a, b) {
+        return a[coluna].localeCompare(b[coluna]);
+      });else this._listaFinancas.ordena(function (a, b) {
+        return a[coluna] - b[coluna];
+      });
+
+      if (coluna === this._ordemAtual) {
+        this._listaFinancas.reverse();
+
+        this._ordemAtual = "";
+      } else {
+        this._ordemAtual = coluna;
+      }
+
+      this._ordemColuna = coluna;
+    }
+  }, {
+    key: "coluna",
+    get: function get() {
+      return this._ordemColuna;
+    }
+  }, {
+    key: "ordem",
+    get: function get() {
+      return this._ordemAtual;
     }
   }]);
 
@@ -344,6 +374,16 @@ var ListaFinancas = /*#__PURE__*/function () {
     key: "esvazia",
     value: function esvazia() {
       this._financas = [];
+    }
+  }, {
+    key: "ordena",
+    value: function ordena(criterio) {
+      this._financas.sort(criterio);
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._financas.reverse();
     }
   }, {
     key: "financas",
@@ -494,6 +534,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -515,20 +559,37 @@ var FinancasView = /*#__PURE__*/function (_View) {
 
   var _super = _createSuper(FinancasView);
 
-  function FinancasView(elemento) {
+  function FinancasView(elemento, controller) {
+    var _this;
+
     _classCallCheck(this, FinancasView);
 
-    return _super.call(this, elemento);
+    _this = _super.call(this, elemento);
+    _this._controller = controller;
+    return _this;
   }
 
   _createClass(FinancasView, [{
     key: "template",
     value: function template(model) {
-      return "<table class=\"table\">\n        <thead>\n          <tr>\n            <th scope=\"col\">Item</th>\n            <th scope=\"col\">Data</th>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">$</th>\n            <th scope=\"col\">=</th>\n          </tr>\n        </thead>\n        <tbody>\n            ".concat(model.financas.map(function (financa) {
+      return "<table class=\"table\">\n        <thead>\n          <tr>\n            <th data-col=\"item\" scope=\"col\">Item ".concat(this._controller.coluna === 'item' ? this._controller.ordem === 'item' ? '🔻' : '🔺' : '', "</th>\n            <th data-col=\"data\" scope=\"col\">Data ").concat(this._controller.coluna === 'data' ? this._controller.ordem === 'data' ? '🔻' : '🔺' : '', "</th>\n    <th data-col=\"quantidade\" scope=\"col\"># ").concat(this._controller.coluna === 'quantidade' ? this._controller.ordem === 'quantidade' ? '🔻' : '🔺' : '', "</th>\n    <th data-col=\"valor\" scope=\"col\">$ ").concat(this._controller.coluna === 'valor' ? this._controller.ordem === 'valor' ? '🔻' : '🔺' : '', "</th>\n    <th scope=\"col\">=</th>\n          </tr>\n        </thead>\n  <tbody>\n    ").concat(model.financas.map(function (financa) {
         return "<tr>\n                    <td>".concat(financa.item, "</td>\n                    <td>").concat(_helpers_DateHelper__WEBPACK_IMPORTED_MODULE_1__["DateHelper"].dataParaTexto(financa.data), "</td>\n                    <td>").concat(financa.quantidade, "</td>\n                    <td>").concat(financa.valor, "</td>\n                    <td>").concat(financa.total, "</td>\n                  </tr>");
-      }).join(""), "\n        </tbody>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\"></td>\n            <td>").concat(model.financas.reduce(function (acc, financa) {
+      }).join(""), "\n  </tbody>\n  <tfoot>\n    <tr>\n      <td colspan=\"4\"></td>\n      <td>").concat(model.financas.reduce(function (acc, financa) {
         return acc + financa.total;
-      }, 0.0), "</td>\n          </tr>\n        </tfoot>\n      </table>");
+      }, 0.0), "</td>\n    </tr>\n  </tfoot>\n      </table> ");
+    }
+  }, {
+    key: "update",
+    value: function update(modelo) {
+      var _this2 = this;
+
+      _get(_getPrototypeOf(FinancasView.prototype), "update", this).call(this, modelo);
+
+      document.querySelectorAll('[data-col]').forEach(function (col) {
+        return col.onclick = function () {
+          return _this2._controller.ordena(col.dataset.col);
+        };
+      });
     }
   }]);
 
@@ -574,6 +635,74 @@ var FinancaService = /*#__PURE__*/function () {
   }]);
 
   return FinancaService;
+}();
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Bind", function() { return Bind; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Bind = /*#__PURE__*/function () {
+  function Bind(model, view) {
+    _classCallCheck(this, Bind);
+
+    this._proxy = new Proxy(model, {
+      get: function get(target, property) {
+        if (property === 'esvazia') {
+          target.esvazia();
+          view.update(target);
+        } else if (property === 'reverse') {
+          target.reverse();
+          console.log('Reverse');
+        }
+      },
+      set: function set(target, property, value) {
+        if (property === 'adiciona') {
+          target.adiciona(value);
+          view.update(target);
+          return true;
+        } else if (property === 'ordena') {
+          target.ordena(value);
+          view.update(target);
+          console.log('Ordena');
+          console.log(value);
+          return true;
+        } else return false;
+      }
+    });
+  }
+
+  _createClass(Bind, [{
+    key: "adiciona",
+    value: function adiciona(value) {
+      this._proxy.adiciona = value;
+    }
+  }, {
+    key: "esvazia",
+    value: function esvazia() {
+      this._proxy.esvazia;
+    }
+  }, {
+    key: "ordena",
+    value: function ordena(criterio) {
+      this._proxy.ordena = criterio;
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._proxy.reverse;
+    }
+  }]);
+
+  return Bind;
 }();
 
 /***/ })
