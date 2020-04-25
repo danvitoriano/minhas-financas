@@ -25,22 +25,15 @@ export class FinancaController {
 
     adiciona(evento) {
         evento.preventDefault()
-        this.criaFinanca(this._criaFinanca())
-        // this._listaFinancas.adiciona(this._criaFinanca())
+        this.adicionaFinanca(this._criaFinanca())
         this._financasView.update(this._listaFinancas)
         this._notificacao.texto = "Finança adicionada 2"
         this._notificacaoView.update(this._notificacao)
         this._limpaFormulario()
     }
 
-    criaFinanca(financa) {
-        let financaService = new FinancaService()
-        financaService.postFinanca(financa)
-    }
-
     _criaFinanca() {
-        console.log(DateHelper.textoParaData(this._inputData.value))
-        return new Financa(this._inputItem.value, DateHelper.textoParaData(this._inputData.value), this._inputQuantidade.value, this._inputValor.value)
+        return new Financa(this._inputItem.value, this._inputData.value, this._inputQuantidade.value, this._inputValor.value)
     }
 
     _limpaFormulario() {
@@ -54,6 +47,11 @@ export class FinancaController {
     apaga() {
         this._listaFinancas.esvazia()
         this._financasView.update(this._listaFinancas)
+    }
+
+    adicionaFinanca(financa) {
+        let financaService = new FinancaService()
+        financaService.postFinanca(financa)
     }
 
     importaFinancas() {
