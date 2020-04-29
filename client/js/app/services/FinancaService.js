@@ -1,30 +1,25 @@
 import { Financa } from '../models/Financa'
+import { HttpService } from '../services/HttpService'
 
 export class FinancaService {
+    
     getFinancasSemana() {
-        return new Promise(
-            (resolve, reject) => {
-                fetch('https://evening-badlands-20922.herokuapp.com/financas/anterior')
-                    .then(res => res.json())
-                    .then(financas => {
-                        resolve(
-                            financas.map(
-                                financa => new Financa(
-                                    financa.item,
-                                    new Date(financa.data),
-                                    financa.quantidade,
-                                    financa.valor
-                                )
-                            )
-                        )
-                    })
-                    .catch(err => {
-                        console.error(err)
-                        reject("deu ruim")
-                    })
+        const httpService = new HttpService()
+        return httpService.get('http://localhost:9000/financas/anterior')
+            .then(financas => financas.map(
+                    ({item, data, quantidade, valor}) => new Financa(
+                        item,
+                        new Date(data),
+                        quantidade,
+                        valor,
+                    )
+                )
+            )
+            .catch(err => console.error(err))
+    }
 
-
-            }
-        )
+    postFinanca(financa) {
+        const httpService = new HttpService()
+        httpService.post('http://localhost:9000/financas', financa)
     }
 }
