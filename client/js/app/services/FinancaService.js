@@ -2,6 +2,7 @@ import { Financa } from '../models/Financa'
 import { HttpService } from '../services/HttpService'
 
 export class FinancaService {
+    
     getFinancasSemana() {
         const httpService = new HttpService()
         return httpService.get('http://localhost:9000/financas/anterior')
@@ -19,10 +20,6 @@ export class FinancaService {
 
     postFinanca(financa) {
         const httpService = new HttpService()
-        return httpService.post('http://localhost:9000/financas', financa)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch(err => console.error(err))
+        httpService.post('http://localhost:9000/financas', financa)
     }
 }

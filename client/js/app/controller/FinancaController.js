@@ -25,7 +25,8 @@ export class FinancaController {
 
     adiciona(evento) {
         evento.preventDefault()
-        this.adicionaFinanca(this._criaFinanca())
+        this._listaFinancas.adiciona(this._criaFinanca())
+        this.postaFinanca(this._postaFinanca())
         this._financasView.update(this._listaFinancas)
         this._notificacao.texto = "Finança adicionada 2"
         this._notificacaoView.update(this._notificacao)
@@ -33,7 +34,7 @@ export class FinancaController {
     }
 
     _criaFinanca() {
-        return new Financa(this._inputItem.value, this._inputData.value, this._inputQuantidade.value, this._inputValor.value)
+        return new Financa(this._inputItem.value, DateHelper.textoParaData(this._inputData.value), this._inputQuantidade.value, this._inputValor.value)
     }
 
     _limpaFormulario() {
@@ -44,12 +45,21 @@ export class FinancaController {
         // this._inputItem.focus()
     }
 
+    _postaFinanca() {
+        return {
+            item: this._inputItem.value,
+            data: this._inputData.value,
+            quantidade: this._inputQuantidade.value,
+            valor: this._inputValor.value
+        }
+    }
+
     apaga() {
         this._listaFinancas.esvazia()
         this._financasView.update(this._listaFinancas)
     }
 
-    adicionaFinanca(financa) {
+    postaFinanca(financa) {
         let financaService = new FinancaService()
         financaService.postFinanca(financa)
     }

@@ -1,13 +1,11 @@
 export class HttpService {
     get(url) {
-        return fetch(url, {
-            method: 'GET',
-        })
+        return fetch(url)
         .then(res => res.json())
     }
 
     post (url, data) {
-        return fetch (url, {
+        fetch (url, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -15,6 +13,5 @@ export class HttpService {
                 'Content-Type': 'application/json'
             },
         })
-        .then(res => res.json())
     }
 }
