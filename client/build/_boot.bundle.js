@@ -330,7 +330,33 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 var ListaFinancas = /*#__PURE__*/function () {
   function ListaFinancas() {
+    var _this = this;
+
     _classCallCheck(this, ListaFinancas);
+
+    this.connection;
+    this.indexedDb = "DB";
+    this.openRequest = window.indexedDB.open(this.indexedDb, 1);
+
+    this.openRequest.onupgradeneeded = function (e) {
+      var minhaConnection = e.target.result;
+
+      if (minhaConnection.objectStoreNames.contains(_this.indexedDb)) {
+        minhaConnection.deleteObjectStore(_this.indexedDb);
+      }
+
+      minhaConnection.createObjectStore(_this.indexedDb, {
+        autoIncrement: true
+      });
+    };
+
+    this.openRequest.onsuccess = function (e) {
+      _this.connection = e.target.result;
+    };
+
+    this.openRequest.onerror = function (e) {
+      console.log(e.target.error); // faça algo com o erro
+    };
 
     this._financas = [];
   }
@@ -338,7 +364,13 @@ var ListaFinancas = /*#__PURE__*/function () {
   _createClass(ListaFinancas, [{
     key: "adiciona",
     value: function adiciona(financa) {
+      var transaction = this.connection.transaction([this.indexedDb], "readwrite");
+      var store = transaction.objectStore(this.indexedDb);
+      var request = store.add(financa);
+
       this._financas.push(financa);
+
+      console.log(financa);
     }
   }, {
     key: "esvazia",
