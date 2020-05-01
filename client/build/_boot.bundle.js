@@ -96,6 +96,7 @@ var financaController = new _controller_FinancaController__WEBPACK_IMPORTED_MODU
 document.querySelector('form').onsubmit = financaController.adiciona.bind(financaController);
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController);
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController);
+document.querySelector('#btn-filtrar').onclick = financaController.filtra.bind(financaController);
 
 /***/ }),
 /* 1 */
@@ -309,7 +310,7 @@ var Financa = /*#__PURE__*/function () {
     key: "total",
     get: function get() {
       return this._quantidade * this._valor;
-    }
+    }, 
   }]);
 
   return Financa;
