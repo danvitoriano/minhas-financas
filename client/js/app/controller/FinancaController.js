@@ -62,6 +62,10 @@ export class FinancaController {
         this._financasView.update(this._listaFinancas)
     }
 
+    limparFiltro() {
+        this._financasView.update(this._listaFinancas)
+    }
+
     importaFinancas() {
         let financaService = new FinancaService()
         financaService.getFinancasSemana()
