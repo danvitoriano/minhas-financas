@@ -97,6 +97,7 @@ document.querySelector('form').onsubmit = financaController.adiciona.bind(financ
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController);
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController);
 document.querySelector('#btn-filtro').onclick = financaController.filtra.bind(financaController);
+document.querySelector('#btn-limpar-filtro').onclick = financaController.limparFiltro.bind(financaController);
 
 /***/ }),
 /* 1 */
@@ -186,6 +187,11 @@ var FinancaController = /*#__PURE__*/function () {
       this._financasView.update(this._listaFinancas);
     }
   }, {
+    key: "limparFiltro",
+    value: function limparFiltro() {
+      this._financasView.update(this._listaFinancas);
+    }
+  }, {
     key: "importaFinancas",
     value: function importaFinancas() {
       var _this = this;
@@ -230,8 +236,6 @@ var FinancaController = /*#__PURE__*/function () {
   }, {
     key: "filtra",
     value: function filtra() {
-      console.log("Função césar");
-
       if (this._inputFiltro.value === "") {
         this._financasView.update(this._listaFinancas);
       } else {
@@ -409,7 +413,6 @@ var ListaFinancas = /*#__PURE__*/function () {
   }, {
     key: "filtra",
     value: function filtra(dataFiltrada) {
-      console.log("função Valmir");
       return this._financas.filter(function (financa) {
         return financa._data.setHours(0, 0, 0, 0).valueOf() === dataFiltrada.valueOf();
       });

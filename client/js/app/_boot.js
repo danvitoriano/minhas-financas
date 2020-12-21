@@ -6,3 +6,5 @@ document.querySelector('form').onsubmit = financaController.adiciona.bind(financ
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController)
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController)
 document.querySelector('#btn-filtro').onclick = financaController.filtra.bind(financaController)
+
+document.querySelector('#btn-limpar-filtro').onclick = financaController.limparFiltro.bind(financaController)
