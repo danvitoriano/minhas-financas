@@ -20,7 +20,7 @@ export class ListaFinancas {
     }
 
     filtra(dataFiltrada) {
-        return this._financas.filter(financa => financa._data.setHours(0,0,0,0).valueOF() === dataFiltrada.valueOf())
+        return this._financas.filter(financa => financa._data.setHours(0,0,0,0).valueOf() === dataFiltrada.valueOf())
     } 
 
     get financas() {
