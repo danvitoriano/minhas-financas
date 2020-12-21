@@ -18,7 +18,11 @@
         style="width: 72px; height: 72px;"
         alt="Logo Minhas Finanças"
       />
-      <h1 class="h2 py-2">Minhas finanças</h1>
+      <h1 class="h2 py-2">
+        <a href='/pricing/pricing/index.html'>
+          <p>Minhas finanças</p>
+        </a>
+      </h1>
     </div>
 
     <div class="text-center">
@@ -84,8 +88,27 @@
       <input type="submit" name="Enviar" id="" class="btn btn-primary" />
     </form>
 
-    <div class="py-3" id="financasView"></div>
+    <div class="py-3" id="financasView">
+    </div>
 
+    <div class="py-3">
+      <label for="filtro">Filtro</label>
+      <input
+        type="date"
+        id="filtro"
+        name=""
+        class="form-control"
+        value=""
+      />
+    </div>
+    <div>
+      <button type="text" name="Filtrar" id="btn-filtro" class="btn btn-secondary text-center">
+        Filtrar
+      </button>
+      <button type="text" name="Limpar" id="btn-limpar-filtro" class="btn btn-secondary text-center">
+        Limpar
+      </button>
+    </div>
     <script src="./build/_boot.bundle.js"></script>
   </body>
 </html>
