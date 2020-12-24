@@ -1,16 +1,11 @@
 {
   "hosting": {
+    "site": "mob20-minhas-financas-gr-88914",
     "public": "client",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
