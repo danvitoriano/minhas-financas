@@ -102,7 +102,6 @@ export class FinancaController {
     }
 
     filtra() {
-        console.log('FILTRA')
         if (this._inputFiltro.value === "") {
             this._financasView.update(this._listaFinancas)
         } else {
