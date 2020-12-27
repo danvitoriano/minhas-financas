@@ -1,4 +1,4 @@
-import { FinancaController } from './controller/FinancaController'
+import { FinancaController } from './controller/FinancaController';
 
 let financaController = new FinancaController();
 
@@ -6,3 +6,4 @@ document.querySelector('form').onsubmit = financaController.adiciona.bind(financ
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController)
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController)
 document.querySelector('#btn-filtro').onclick = financaController.filtra.bind(financaController)
+document.querySelector('#btn-limpar').onclick = financaController.limpar.bind(financaController)
