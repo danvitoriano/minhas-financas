@@ -105,7 +105,7 @@ export class FinancaController {
         this._financasView.update(this._listaFinancas)
     }
 
-    filtrar() {
+    filtra() {
     
         if (this._inputFiltroData.value === "") {
         
@@ -115,7 +115,7 @@ export class FinancaController {
         } else {
         
             let listaFiltrada = new ListaFinancas()
-            listaFiltrada._financas = this._listaFinancas.filtrar(DateHelper.textoParaData(this._inputFiltroData.value))
+            listaFiltrada._financas = this._listaFinancas.filtra(DateHelper.textoParaData(this._inputFiltroData.value))
             
             if(listaFiltrada._financas.length === 0) {
 
@@ -124,6 +124,8 @@ export class FinancaController {
 
             } else {
 
+                this._notificacaoView.update("")
+                
                 this._financasView.update(listaFiltrada)
             }
         }
@@ -135,6 +137,6 @@ export class FinancaController {
         
         this._inputFiltroData.value = ""
 
-        this._financasView.update(this._listaFinancas.financas)
+        this._financasView.update(this._listaFinancas)
     }
 }

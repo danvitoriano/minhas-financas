@@ -19,7 +19,7 @@ export class ListaFinancas {
         this._financas.reverse()
     }
 
-    filtrar(filtraData) {
+    filtra(filtraData) {
     
         return this._financas.filter(
         

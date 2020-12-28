@@ -93,13 +93,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _controller_FinancaController__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 
 var financaController = new _controller_FinancaController__WEBPACK_IMPORTED_MODULE_0__["FinancaController"]();
-console.log("aqui1");
 document.querySelector('form').onsubmit = financaController.adiciona.bind(financaController);
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController);
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController);
-document.querySelector('#btn-filtrar').onclick = financaController.filtrar.bind(financaController);
+document.querySelector('#btn-filtrar').onclick = financaController.filtra.bind(financaController);
 document.querySelector('#btn-limpar').onclick = financaController.limpar.bind(financaController);
-console.log("aqui2");
 
 /***/ }),
 /* 1 */
@@ -137,7 +135,6 @@ var FinancaController = /*#__PURE__*/function () {
     this._inputData = $("#data");
     this._inputQuantidade = $("#quantidade");
     this._inputValor = $("#valor");
-    console.log("teste 1");
     this._inputFiltroData = $("#filtro-data");
     this._listaFinancas = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
     this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"), this);
@@ -232,24 +229,23 @@ var FinancaController = /*#__PURE__*/function () {
       this._financasView.update(this._listaFinancas);
     }
   }, {
-    key: "filtrar",
-    value: function filtrar() {
-      console.log("filtar()");
-
+    key: "filtra",
+    value: function filtra() {
       if (this._inputFiltroData.value === "") {
         this._notificacao.texto = "Preencha um data!";
 
         this._notificacaoView.update(this._notificacao, "danger");
       } else {
         var listaFiltrada = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
-        listaFiltrada._financas = this._listaFinancas.filtrar(_helpers_DateHelper__WEBPACK_IMPORTED_MODULE_0__["DateHelper"].textoParaData(this._inputFiltroData.value));
-        console.log(listaFiltrada);
+        listaFiltrada._financas = this._listaFinancas.filtra(_helpers_DateHelper__WEBPACK_IMPORTED_MODULE_0__["DateHelper"].textoParaData(this._inputFiltroData.value));
 
         if (listaFiltrada._financas.length === 0) {
           this._notificacao.texto = "Não há resultados para esta data.";
 
           this._notificacaoView.update(this._notificacao, "warning");
         } else {
+          this._notificacaoView.update("");
+
           this._financasView.update(listaFiltrada);
         }
       }
@@ -260,10 +256,8 @@ var FinancaController = /*#__PURE__*/function () {
       this._notificacaoView.update("");
 
       this._inputFiltroData.value = "";
-      var listaFiltrada = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
-      listaFiltrada._financas = this._listaFinancas.financas;
 
-      this._financasView.update(listaFiltrada);
+      this._financasView.update(this._listaFinancas);
     }
   }, {
     key: "coluna",
@@ -430,8 +424,8 @@ var ListaFinancas = /*#__PURE__*/function () {
       this._financas.reverse();
     }
   }, {
-    key: "filtrar",
-    value: function filtrar(filtraData) {
+    key: "filtra",
+    value: function filtra(filtraData) {
       return this._financas.filter(function (financa) {
         return financa._data.setHours(0, 0, 0, 0).valueOf() === filtraData.valueOf();
       });
