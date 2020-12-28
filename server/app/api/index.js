@@ -1,8 +1,10 @@
 var api = {}
 
 var dataAtual = new Date();
+
 var dataAnterior = new Date();
 dataAnterior.setDate(dataAtual.getDate() - 7);
+
 var dateRetrasada = new Date();
 dateRetrasada.setDate(dataAtual.getDate() - 14);
 
@@ -17,7 +19,6 @@ var financas = [
       { item: 'despesa-retrasda-2', data : dateRetrasada, quantidade : 2, valor : 950},
       { item: 'despesa-retrasda-3', data : dateRetrasada, quantidade : 3, valor : 950}
     ];
-
 
 api.listaSemana = function(req, res) {
     var financasAtuais = financas.filter(function(financa) {
@@ -53,7 +54,5 @@ api.cadastraFinanca = function(req, res) {
    financas.push(req.body);
    res.status(200).json("Finança recebida");
 };
-
-
 
 module.exports = api;
