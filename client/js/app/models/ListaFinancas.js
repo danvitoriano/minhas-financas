@@ -19,6 +19,14 @@ export class ListaFinancas {
         this._financas.reverse()
     }
 
+    filtrar(filtraData) {
+    
+        return this._financas.filter(
+        
+            financa => financa._data.setHours(0,0,0,0).valueOf() === filtraData.valueOf()
+        )
+    }
+
     get financas() {
         return [].concat(this._financas)
     }

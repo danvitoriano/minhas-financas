@@ -5,9 +5,8 @@ export class NotificacaoView extends View {
         super(elemento)
     }
 
-    template(model) {
+    template(model, tipo) {
 
-        return model.texto ? `<p class="alert alert-primary my-3">${model.texto}</p>` : `<p></p>`
+        return model.texto ? `<p class="alert alert-${tipo} my-3">${model.texto}</p>` : `<p></p>`
     }
-
 }
