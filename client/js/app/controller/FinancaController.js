@@ -13,6 +13,7 @@ export class FinancaController {
         this._inputData = $("#data")
         this._inputQuantidade = $("#quantidade")
         this._inputValor = $("#valor")
+        // ATIVIDADE 4a
         this._inputFiltro = $("#filtro")
 
         this._listaFinancas = new ListaFinancas()
@@ -101,26 +102,24 @@ export class FinancaController {
         this._financasView.update(this._listaFinancas)
     }
 
+    // ATIVIDADE 4b
+    // IMPORTANTE: ​Observe que para o filtro funcionar, a data cadastrada no campo está no formato mm/dd/yyyy, 
+    // mas a data exibida na lista de finanças é no formato dd/mm/aaaa.
     filtra() {
-        if (this._inputFiltroData.value === "") {
-            this._notificacao.texto = "Preencha uma data!"
-            this._notificacaoView.update(this._notificacao, "danger")
+        if (this._inputFiltro.value === "") {
+            this._financasView.update(this._listaFinancas)
         } else {
-            let listaFiltrada = new ListaFinancas()
-            listaFiltrada._financas = this._listaFinancas.filtrar(DateHelper.textoParaData(this._inputFiltro.value))
-            if(listaFiltrada._financas.length === 0) {
-                this._notificacao.texto = "Não há resultados para esta data."
-                this._notificacaoView.update(this._notificacao, "warning")
-            } else {
-                this._financasView.update(listaFiltrada)
-            }
+            var listaFiltrada = new ListaFinancas()
+            listaFiltrada._financas = this._listaFinancas.filtra(
+                DateHelper.textoParaData(this._inputFiltro.value)
+            )
+            this._financasView.update(listaFiltrada)
         }
     }
 
+    // ATIVIDADE 5c
     limpar() {
-        this._notificacaoView.update("")
-        this._inputFiltroData.value = ""
-        this._financasView.update(this._listaFinancas.financas)
+        this._financasView.update(this._listaFinancas)
     }
 
 }
