@@ -96,6 +96,8 @@ var financaController = new _controller_FinancaController__WEBPACK_IMPORTED_MODU
 document.querySelector('form').onsubmit = financaController.adiciona.bind(financaController);
 document.querySelector('#btn-import').onclick = financaController.importaFinancas.bind(financaController);
 document.querySelector('#btn-apaga').onclick = financaController.apaga.bind(financaController);
+document.querySelector('#btn-filtrar').onclick = financaController.filtra.bind(financaController);
+document.querySelector('#btn-limpar').onclick = financaController.limpar.bind(financaController);
 
 /***/ }),
 /* 1 */
@@ -133,8 +135,9 @@ var FinancaController = /*#__PURE__*/function () {
     this._inputData = $("#data");
     this._inputQuantidade = $("#quantidade");
     this._inputValor = $("#valor");
+    this._inputFiltroData = $("#filtro-data");
     this._listaFinancas = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
-    this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"));
+    this._financasView = new _views_FinancasView__WEBPACK_IMPORTED_MODULE_5__["FinancasView"]($("#financasView"), this);
 
     this._financasView.update(this._listaFinancas);
 
@@ -142,6 +145,9 @@ var FinancaController = /*#__PURE__*/function () {
     this._notificacaoView = new _views_NotificacaoView__WEBPACK_IMPORTED_MODULE_4__["NotificacaoView"]($("#notificacaoView"));
 
     this._notificacaoView.update(this._notificacao);
+
+    this._ordemColuna = "";
+    this._ordemAtual = "";
   }
 
   _createClass(FinancaController, [{
@@ -200,6 +206,68 @@ var FinancaController = /*#__PURE__*/function () {
         console.error(err);
         return;
       });
+    }
+  }, {
+    key: "ordena",
+    value: function ordena(coluna) {
+      if (coluna === 'item') this._listaFinancas.ordena(function (a, b) {
+        return a[coluna].localeCompare(b[coluna]);
+      });else this._listaFinancas.ordena(function (a, b) {
+        return a[coluna] - b[coluna];
+      });
+
+      if (coluna === this._ordemAtual) {
+        this._listaFinancas.reverse();
+
+        this._ordemAtual = "";
+      } else {
+        this._ordemAtual = coluna;
+      }
+
+      this._ordemColuna = coluna;
+
+      this._financasView.update(this._listaFinancas);
+    }
+  }, {
+    key: "filtra",
+    value: function filtra() {
+      if (this._inputFiltroData.value === "") {
+        this._notificacao.texto = "Preencha um data!";
+
+        this._notificacaoView.update(this._notificacao, "danger");
+      } else {
+        var listaFiltrada = new _models_ListaFinancas__WEBPACK_IMPORTED_MODULE_2__["ListaFinancas"]();
+        listaFiltrada._financas = this._listaFinancas.filtra(_helpers_DateHelper__WEBPACK_IMPORTED_MODULE_0__["DateHelper"].textoParaData(this._inputFiltroData.value));
+
+        if (listaFiltrada._financas.length === 0) {
+          this._notificacao.texto = "Não há resultados para esta data.";
+
+          this._notificacaoView.update(this._notificacao, "warning");
+        } else {
+          this._notificacaoView.update("");
+
+          this._financasView.update(listaFiltrada);
+        }
+      }
+    }
+  }, {
+    key: "limpar",
+    value: function limpar() {
+      this._notificacaoView.update("");
+
+      this._inputFiltroData.value = "";
+
+      this._financasView.update(this._listaFinancas);
+    }
+  }, {
+    key: "coluna",
+    get: function get() {
+      return this._ordemColuna;
+    }
+  }, {
+    key: "ordem",
+    get: function get() {
+      return this._ordemAtual;
     }
   }]);
 
@@ -346,6 +414,23 @@ var ListaFinancas = /*#__PURE__*/function () {
       this._financas = [];
     }
   }, {
+    key: "ordena",
+    value: function ordena(criterio) {
+      this._financas.sort(criterio);
+    }
+  }, {
+    key: "reverse",
+    value: function reverse() {
+      this._financas.reverse();
+    }
+  }, {
+    key: "filtra",
+    value: function filtra(filtraData) {
+      return this._financas.filter(function (financa) {
+        return financa._data.setHours(0, 0, 0, 0).valueOf() === filtraData.valueOf();
+      });
+    }
+  }, {
     key: "financas",
     get: function get() {
       return [].concat(this._financas);
@@ -371,10 +456,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 var Notificacao = /*#__PURE__*/function () {
   function Notificacao() {
     var texto = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var tipo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
     _classCallCheck(this, Notificacao);
 
     this._texto = texto;
+    this._tipo = tipo;
   }
 
   _createClass(Notificacao, [{
@@ -384,6 +471,14 @@ var Notificacao = /*#__PURE__*/function () {
     },
     set: function set(texto) {
       this._texto = texto;
+    }
+  }, {
+    key: "tipo",
+    get: function get() {
+      return this._tipo;
+    },
+    set: function set(tipo) {
+      this._tipo = tipo;
     }
   }]);
 
@@ -434,8 +529,8 @@ var NotificacaoView = /*#__PURE__*/function (_View) {
 
   _createClass(NotificacaoView, [{
     key: "template",
-    value: function template(model) {
-      return model.texto ? "<p class=\"alert alert-primary my-3\">".concat(model.texto, "</p>") : "<p></p>";
+    value: function template(model, tipo) {
+      return model.texto ? "<p class=\"alert alert-".concat(tipo, " my-3\">").concat(model.texto, "</p>") : "<p></p>";
     }
   }]);
 
@@ -470,7 +565,8 @@ var View = /*#__PURE__*/function () {
   }, {
     key: "update",
     value: function update(modelo) {
-      this._elemento.innerHTML = this.template(modelo);
+      var tipo = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'primary';
+      this._elemento.innerHTML = this.template(modelo, tipo);
     }
   }]);
 
@@ -494,6 +590,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
@@ -515,20 +615,37 @@ var FinancasView = /*#__PURE__*/function (_View) {
 
   var _super = _createSuper(FinancasView);
 
-  function FinancasView(elemento) {
+  function FinancasView(elemento, controller) {
+    var _this;
+
     _classCallCheck(this, FinancasView);
 
-    return _super.call(this, elemento);
+    _this = _super.call(this, elemento);
+    _this._controller = controller;
+    return _this;
   }
 
   _createClass(FinancasView, [{
     key: "template",
     value: function template(model) {
-      return "<table class=\"table\">\n        <thead>\n          <tr>\n            <th scope=\"col\">Item</th>\n            <th scope=\"col\">Data</th>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">$</th>\n            <th scope=\"col\">=</th>\n          </tr>\n        </thead>\n        <tbody>\n            ".concat(model.financas.map(function (financa) {
+      return "<table class=\"table\">\n        <thead>\n          <tr>\n            <th data-col=\"item\" scope=\"col\">Item ".concat(this._controller.coluna === 'item' ? this._controller.ordem === 'item' ? '🔻' : '🔺' : '', "</th>\n            <th data-col=\"data\" scope=\"col\">Data ").concat(this._controller.coluna === 'data' ? this._controller.ordem === 'data' ? '🔻' : '🔺' : '', "</th>\n    <th data-col=\"quantidade\" scope=\"col\"># ").concat(this._controller.coluna === 'quantidade' ? this._controller.ordem === 'quantidade' ? '🔻' : '🔺' : '', "</th>\n    <th data-col=\"valor\" scope=\"col\">$ ").concat(this._controller.coluna === 'valor' ? this._controller.ordem === 'valor' ? '🔻' : '🔺' : '', "</th>\n    <th scope=\"col\">=</th>\n          </tr>\n        </thead>\n  <tbody>\n    ").concat(model.financas.map(function (financa) {
         return "<tr>\n                    <td>".concat(financa.item, "</td>\n                    <td>").concat(_helpers_DateHelper__WEBPACK_IMPORTED_MODULE_1__["DateHelper"].dataParaTexto(financa.data), "</td>\n                    <td>").concat(financa.quantidade, "</td>\n                    <td>").concat(financa.valor, "</td>\n                    <td>").concat(financa.total, "</td>\n                  </tr>");
-      }).join(""), "\n        </tbody>\n        <tfoot>\n          <tr>\n            <td colspan=\"4\"></td>\n            <td>").concat(model.financas.reduce(function (acc, financa) {
+      }).join(""), "\n  </tbody>\n  <tfoot>\n    <tr>\n      <td colspan=\"4\"></td>\n      <td>").concat(model.financas.reduce(function (acc, financa) {
         return acc + financa.total;
-      }, 0.0), "</td>\n          </tr>\n        </tfoot>\n      </table>");
+      }, 0.0), "</td>\n    </tr>\n  </tfoot>\n      </table> ");
+    }
+  }, {
+    key: "update",
+    value: function update(modelo) {
+      var _this2 = this;
+
+      _get(_getPrototypeOf(FinancasView.prototype), "update", this).call(this, modelo);
+
+      document.querySelectorAll('[data-col]').forEach(function (col) {
+        return col.onclick = function () {
+          return _this2._controller.ordena(col.dataset.col);
+        };
+      });
     }
   }]);
 

@@ -7,7 +7,8 @@ export class View {
         throw new Error('O método template deve ser implementado')
     }
 
-    update(modelo) {
-        this._elemento.innerHTML = this.template(modelo)
+    update(modelo, tipo = 'primary') {
+
+        this._elemento.innerHTML = this.template(modelo, tipo)
     }
 }

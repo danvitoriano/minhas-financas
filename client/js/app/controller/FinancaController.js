@@ -7,14 +7,22 @@ import { FinancasView } from '../views/FinancasView'
 import { FinancaService } from '../services/FinancaService'
 
 export class FinancaController {
+
     constructor() {
+ 
         let $ = document.querySelector.bind(document)
+        
         this._inputItem = $("#item")
         this._inputData = $("#data")
         this._inputQuantidade = $("#quantidade")
         this._inputValor = $("#valor")
+<<<<<<< HEAD
         // ATIVIDADE 4a
         this._inputFiltro = $("#filtro")
+=======
+        
+        this._inputFiltroData = $("#filtro-data")
+>>>>>>> e0b96d9c607d276f37d59860cd8bbf7b883df849
 
         this._listaFinancas = new ListaFinancas()
         this._financasView = new FinancasView($("#financasView"), this)
