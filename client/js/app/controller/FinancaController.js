@@ -13,6 +13,7 @@ export class FinancaController {
         this._inputData = $("#data")
         this._inputQuantidade = $("#quantidade")
         this._inputValor = $("#valor")
+        this._inputFiltro = $("#filtro")
 
         this._listaFinancas = new ListaFinancas()
         this._financasView = new FinancasView($("#financasView"), this)
@@ -98,6 +99,22 @@ export class FinancaController {
         this._ordemColuna = coluna
 
         this._financasView.update(this._listaFinancas)
+    }
+
+    filtra() {
+        if (this._inputFiltroData.value === "") {
+            this._notificacao.texto = "Preencha uma data!"
+            this._notificacaoView.update(this._notificacao, "danger")
+        } else {
+            let listaFiltrada = new ListaFinancas()
+            listaFiltrada._financas = this._listaFinancas.filtrar(DateHelper.textoParaData(this._inputFiltro.value))
+            if(listaFiltrada._financas.length === 0) {
+                this._notificacao.texto = "Não há resultados para esta data."
+                this._notificacaoView.update(this._notificacao, "warning")
+            } else {
+                this._financasView.update(listaFiltrada)
+            }
+        }
     }
 
 }
