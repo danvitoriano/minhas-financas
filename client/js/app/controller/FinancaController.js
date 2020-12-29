@@ -117,4 +117,10 @@ export class FinancaController {
         }
     }
 
+    limpar() {
+        this._notificacaoView.update("")
+        this._inputFiltroData.value = ""
+        this._financasView.update(this._listaFinancas.financas)
+    }
+
 }
